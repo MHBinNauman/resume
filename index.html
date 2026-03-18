@@ -1,3 +1,63 @@
-<iframe src="Hisham_Resume.pdf" width="100%" height="600px" style="border: none;">
-    <p>Your browser does not support PDFs. <a href="Hisham_Resume.pdf">Download the PDF</a>.</p>
-</iframe>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Resume</title>
+
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 12px; }
+
+    /* Desktop/tablet embedded view */
+    .pdf-wrap {
+      width: 100%;
+      height: calc(100vh - 24px); /* fill screen minus padding */
+      max-height: 1000px;         /* optional cap for huge screens */
+      border: 1px solid #e6e6e6;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .pdf {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* Mobile actions */
+    .mobile-actions { display: none; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      text-decoration: none;
+      color: #111;
+      background: #fafafa;
+    }
+
+    @media (max-width: 768px) {
+      .pdf-wrap { display: none; }       /* hide embed on mobile */
+      .mobile-actions { display: flex; } /* show buttons */
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <div class="mobile-actions">
+      <a class="btn" href="Hisham_Resume.pdf" target="_blank" rel="noopener">Open PDF</a>
+      <a class="btn" href="Hisham_Resume.pdf" download>Download PDF</a>
+    </div>
+
+    <section class="pdf-wrap" aria-label="Resume PDF">
+      <iframe class="pdf" src="Hisham_Resume.pdf#view=FitH" title="Resume PDF">
+        <p>Your browser does not support PDFs. <a href="Hisham_Resume.pdf">Download the PDF</a>.</p>
+      </iframe>
+    </section>
+  </main>
+</body>
+</html>
