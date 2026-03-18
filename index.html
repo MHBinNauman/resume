@@ -6,56 +6,93 @@
   <title>Resume</title>
 
   <style>
+    :root { --pad: 12px; --btn-h: 44px; }
+
     html, body { height: 100%; margin: 0; }
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: #fff; }
 
-    .container { max-width: 1000px; margin: 0 auto; padding: 12px; }
+    .container { max-width: 1000px; margin: 0 auto; padding: var(--pad); }
 
-    /* Desktop/tablet embedded view */
+    /* Sticky header with a clear download button */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid #eee;
+      padding: var(--pad);
+    }
+    .topbar-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: var(--btn-h);
+      padding: 0 14px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      background: #111;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .btn:active { transform: translateY(1px); }
+
+    /* Responsive PDF viewport */
     .pdf-wrap {
       width: 100%;
-      height: calc(100vh - 24px); /* fill screen minus padding */
-      max-height: 1000px;         /* optional cap */
+      /* Fill the screen below the sticky bar:
+         100vh - (topbar height approx: button height + padding*2 + border)
+         This keeps it "full screen" on mobile and desktop. */
+      height: calc(100vh - (var(--btn-h) + (var(--pad) * 2) + 1px));
       border: 1px solid #e6e6e6;
       border-radius: 12px;
       overflow: hidden;
       background: #fff;
+      margin-top: var(--pad);
     }
-    .pdf {
+    iframe {
       width: 100%;
       height: 100%;
       border: 0;
+      display: block;
     }
 
-    /* Mobile actions */
-    .mobile-actions { display: none; gap: 12px; flex-wrap: wrap; }
-    .btn {
-      display: inline-block;
-      padding: 12px 14px;
-      border-radius: 10px;
-      border: 1px solid #ddd;
-      text-decoration: none;
-      color: #111;
-      background: #fafafa;
-    }
-
-    @media (max-width: 768px) {
-      .pdf-wrap { display: none; }       /* hide embed on mobile */
-      .mobile-actions { display: flex; } /* show buttons */
+    /* On very small screens, slightly reduce padding so more PDF is visible */
+    @media (max-width: 420px) {
+      :root { --pad: 10px; }
     }
   </style>
 </head>
 
 <body>
-  <main class="container">
-    <div class="mobile-actions">
-      <a class="btn" href="Hisham_Resume.pdf" target="_blank" rel="noopener">Open PDF</a>
-      <a class="btn" href="Hisham_Resume.pdf" download>Download PDF</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="btn" href="Hisham_Resume.pdf" download>Download Resume (PDF)</a>
     </div>
+  </header>
 
+  <main class="container">
     <section class="pdf-wrap" aria-label="Resume PDF">
-      <iframe class="pdf" src="Hisham_Resume.pdf#view=FitH" title="Resume PDF">
-        <p>Your browser does not support PDFs. <a href="Hisham_Resume.pdf">Download the PDF</a>.</p>
+      <!-- #view=FitH helps the initial fit horizontally in many viewers -->
+      <iframe
+        src="Hisham_Resume.pdf#view=FitH"
+        title="Resume PDF"
+      >
+        <p>
+          Your browser does not support PDFs.
+          <a href="Hisham_Resume.pdf" download>Download the PDF</a>.
+        </p>
       </iframe>
     </section>
   </main>
